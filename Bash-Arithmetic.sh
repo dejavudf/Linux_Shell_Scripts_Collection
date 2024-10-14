@@ -1,7 +1,4 @@
-# Author : Jaydatt Patel
-# arithmetic : +,-,*,/,%
-#syntax : $((arithmetic))
-
+#!/bin/bash
 echo $((5+2))
 echo $((5-2))
 echo $((5*2))
