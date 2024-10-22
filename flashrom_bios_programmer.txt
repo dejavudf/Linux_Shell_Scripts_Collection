@@ -1,0 +1,18 @@
+#!/bin/bash
+opt=$(zenity --title "Flashrom v1.2 - via Gravador USB CH341APro"  --list  --text "Selecione a opção" \
+    --radiolist \
+    --column "Marcar" \
+    --column "Opção" \
+    FALSE Copiar-Chip-Backup TRUE Programar-Chip-Gravar --width="450" height="50");
+# leitura
+if [ "$opt" == "Copiar-Chip-Backup" ]; then
+    nome=$(zenity --title "Salvar arquivo.bin" --file-selection --save --confirm-overwrite --width="250" height="50"); echo $backup && flashrom -p ch341a_spi -r "$backup" > backup.log 2>&1 | zenity --text="Lendo Chip. Aguarde" --progress --auto-close
+zenity --info --text="Backup Concluido!" --width="150" height="50"
+fi
+# escrita
+if [ "$opt" == "Programar-Chip-Gravar" ]; then
+    load=$(zenity --file-selection --title="Selecione um arquivo"); echo $gravacao && flashrom -p ch341a_spi -w "$gravacao" > gravacao.log 2>&1 | zenity --text="Programando Chip. Aguarde..." --progress --auto-close
+zenity --info --text="Gravação Concluida!" --width="150" height="50"
+fi
+
+exit 0
